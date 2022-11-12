@@ -1,6 +1,7 @@
 
 import Data from './babyNamesData.json'
 import {useState} from "react"
+import './buttons.css'
 
 interface BabyNamesProps {
     id: number;
@@ -22,6 +23,7 @@ export default function NameButtons(){
     return(
         <div className="nameButtons">
             <input value={name}/>
+            <div className="flex-buttons">
             {
                     Data.map( baby => {
                     return(
@@ -32,6 +34,7 @@ export default function NameButtons(){
                 })
                 
             }
+            </div>
         </div>
     );
 }
