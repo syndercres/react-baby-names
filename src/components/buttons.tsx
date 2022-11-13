@@ -45,7 +45,7 @@ const gender = (baby:BabyNamesProps):string => {
                     pick.map( pick => {
                         return(
                             <div className= "name-pick" key={pick.id}>
-                            <p>{pick.name}</p>
+                            <button className={gender(pick)}>{pick.name}</button>
                             </div>
                         )
                     }
