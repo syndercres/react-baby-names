@@ -39,7 +39,7 @@ const gender = (baby:BabyNamesProps):string => {
 
     return(
         <div className="nameButtons">
-            <input value={name}/>
+            <h1>Favorites:</h1>
             <div className = "picks">
                 {
                     pick.map( pick => {
