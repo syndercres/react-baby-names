@@ -21,6 +21,14 @@ export default function NameButtons(){
     setName(prev => prev + "  "+ name);
 }
 
+    const [pick,setPick] = useState<BabyNamesProps[]>([]);
+
+    const addPick = (pick:BabyNamesProps) =>{
+        setPick(prev => [...prev,pick])
+    }
+
+
+
 const gender = (baby:BabyNamesProps):string => {
     if (baby.sex === 'm'){
         return 'male';
@@ -32,13 +40,35 @@ const gender = (baby:BabyNamesProps):string => {
     return(
         <div className="nameButtons">
             <input value={name}/>
+            <div className = "picks">
+                {
+                    pick.map( pick => {
+                        return(
+                            <div className= "name-pick" key={pick.id}>
+                            <p>{pick.name}</p>
+                            </div>
+                        )
+                    }
+
+                    )
+                }
+            </div>
             <div className="flex-buttons">
             {
-                    Data.map( baby => {
+                    BabyNamesArr.map( baby => {
                     return(
                        
                         <div className= "gendered" key={baby.id}>
-                            <button className={gender(baby)} onClick={() => addName(baby.name)}>{baby.name}</button>
+                            <button className={gender(baby)} onClick=
+                            {() => {
+                            addName(baby.name)
+                            addPick(baby)
+                            }
+                        }>
+                                
+                                {baby.name}
+                            
+                            </button>
                         </div>
                         
                     )
