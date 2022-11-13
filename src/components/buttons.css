@@ -7,6 +7,16 @@
     margin-top: 100px;
     margin-bottom: 100px;
     
+    
+}
+.picks{
+    display:flex;
+    flex-wrap: wrap;
+    margin-right: 100px;
+    margin-left: 100px;
+    margin-top: 100px;
+    margin-bottom: 100px;
+    
 }
 .nameButtons{
     display:block;
@@ -89,4 +99,22 @@ input{
         box-shadow: -1px -1px 5px rgba(225, 225, 225, 0.6), 1px 1px 5px rgba(0, 0, 0, 0.23),
         inset 2px 2px 4px rgba(0, 0, 0, 0.3), inset -2px -2px 5px rgba(225, 225, 225, 1);
         color: pink;
+        }
+
+        .namePick{
+            border:none;
+            margin-left: 20px;
+            margin-bottom: 20px;
+            font-size: 16px;
+            align-items: center;
+            justify-content: center;
+            cursor:pointer;
+            height: 25px;
+            width:125px;
+            transition:all;
+            transition-duration:250ms;
+            background: e8ecf2;
+            border-radius: 9999px;
+            box-shadow: -5px -5px 10px rgba(255, 255, 255, 0.8), 5px 5px 10px rgba(0, 0, 0, 0.25);
+            font-family: monospace;
         }
