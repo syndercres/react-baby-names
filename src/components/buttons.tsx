@@ -11,7 +11,8 @@ interface BabyNamesProps {
     sex: string;
 }
 const BabyNamesArr: BabyNamesProps[] = Data;
-
+const MaleNamesArr: BabyNamesProps[] = Data.filter(Data => Data.sex === "m");
+const FemaleNamesArr: BabyNamesProps[] = Data.filter(Data => Data.sex === "f");
 
 export default function NameButtons() {
 
@@ -34,7 +35,37 @@ export default function NameButtons() {
         
         return matchList;
     }
-    const matches = matchingNames(searchTerm, BabyNamesArr);
+
+    const [genderFilter,setGenderFilter] = useState("x");
+    const FilterNamesMale = ()=>{
+        setGenderFilter("m");
+    }
+
+
+    const FilterNamesFemale = ()=>{
+        setGenderFilter("f");
+    }
+
+    const FilterNamesNone = ()=>{
+        setGenderFilter("x");
+    }
+
+
+    function filterDone(gender:string): BabyNamesProps[]{
+        if(genderFilter==="m"){
+            return MaleNamesArr;
+        }
+        if(genderFilter==="f"){
+            return FemaleNamesArr;
+        }
+        if(genderFilter==="x"){
+            return BabyNamesArr;
+        }
+        return [];
+    }
+
+
+    const matches = matchingNames(searchTerm, filterDone(genderFilter));
     
     const [name, setName] = useState('');
 
@@ -60,22 +91,20 @@ export default function NameButtons() {
 
     return (
         <div className="nameButtons">
-            <h1>Favorites:</h1>
+           
             <div className="search-bar">
+                <div className="flex-buttons">
+                <button className="favorites" onClick={FilterNamesMale}>filter male</button>
+                <button className="favorites" onClick={FilterNamesFemale}>filter female</button>
+                <button className="favorites"onClick={FilterNamesNone}>filter none</button>
+                </div>
                 <input value={searchTerm} 
                 onChange={handleSearchTermChange}
                 />
-                Search term is {searchTerm}
-                <div className="nameList">
-                    {matches.map( Data => (
-                    <div className="match" key={Data.id}>
-                    <button className={gender(Data)}>{Data.name}</button>
-                    </div>
-                    )
-                    )}
-                </div>
-            </div>
-            <div className="picks">
+                
+
+                <div className="picks">
+                    <h1 className="favorites">Favorites:</h1>
                 {
                     pick.map(pick => {
                         return (
@@ -88,29 +117,22 @@ export default function NameButtons() {
                     )
                 }
             </div>
-            <div className="flex-buttons">
-                {
-                    BabyNamesArr.map(baby => {
-                        return (
-
-                            <div className="gendered" key={baby.id}>
-                                <button className={gender(baby)} onClick=
+                <div className="gendered flex-buttons">
+                    {matches.map( Data => (
+                    <div className="match" key={Data.id}>
+                    <button className={gender(Data)} onClick=
                                     {() => {
-                                        addName(baby.name)
-                                        addPick(baby)
+                                        addName(Data.name)
+                                        addPick(Data)
                                     }
-                                    }>
-
-                                    {baby.name}
-
-                                </button>
-                            </div>
-
-                        )
-                    })
-
-                }
+                                    }>{Data.name}</button>
+                    </div>
+                    )
+                    )}
+                </div>
             </div>
+
+
         </div>
     );
 }
