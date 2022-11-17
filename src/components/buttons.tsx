@@ -3,6 +3,7 @@ import Data from './babyNamesData.json'
 import { useState } from "react"
 import './buttons.css'
 import { Bundle } from 'typescript';
+import React, {ChangeEvent} from 'react'
 
 interface BabyNamesProps {
     id: number;
@@ -14,6 +15,27 @@ const BabyNamesArr: BabyNamesProps[] = Data;
 
 export default function NameButtons() {
 
+    const [searchTerm,setSearchTerm] = useState("");
+
+    function handleSearchTermChange(event: ChangeEvent<HTMLInputElement>): void {
+        setSearchTerm(event.target.value);
+    }
+
+    function matchingNames(searchTerm:string, list: BabyNamesProps[]): BabyNamesProps[] {
+        const matchList: BabyNamesProps[] = [];
+        
+        for(const BabyNamesProps of list){
+            const lowerName = BabyNamesProps.name.toLowerCase();
+            const lowerSearch = searchTerm.toLowerCase();
+            if((lowerName).includes(lowerSearch)){
+                matchList.push(BabyNamesProps);
+            }
+        }
+        
+        return matchList;
+    }
+    const matches = matchingNames(searchTerm, BabyNamesArr);
+    
     const [name, setName] = useState('');
 
     const addName = (name: string) => {
@@ -39,6 +61,20 @@ export default function NameButtons() {
     return (
         <div className="nameButtons">
             <h1>Favorites:</h1>
+            <div className="search-bar">
+                <input value={searchTerm} 
+                onChange={handleSearchTermChange}
+                />
+                Search term is {searchTerm}
+                <div className="nameList">
+                    {matches.map( Data => (
+                    <div className="match" key={Data.id}>
+                    <button className={gender(Data)}>{Data.name}</button>
+                    </div>
+                    )
+                    )}
+                </div>
+            </div>
             <div className="picks">
                 {
                     pick.map(pick => {
